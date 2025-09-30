@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanFlow - Traffic Management Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Alert Notifications -->
+    <div id="alerts-container" class="alerts-container">
+        <div class="alert alert--high">
+            <span class="alert-icon">🚨</span>
+            <span class="alert-message">Traffic accident on Highway 7 - Lane blocked</span>
+            <span class="alert-time">06:42</span>
+            <button class="alert-close" onclick="closeAlert(this)">×</button>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <div class="logo-icon">UF</div>
+                <span class="logo-text">UrbanFlow</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item nav-item--active">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Reports</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Analytics</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Historical Data</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Settings</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">User Management</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">🔔</span>
+                <span class="nav-text">Alerts & Notifications</span>
+                <span class="nav-badge">3</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+                <h1 class="city-name">Metro City</h1>
+            </div>
+            <div class="header-right">
+                <div class="datetime" id="datetime"></div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search..." class="form-control search-input">
+                </div>
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar">SC</div>
+                    <div class="user-info">
+                        <span class="user-name">Sarah Chen</span>
+                        <span class="user-role">Traffic Operator</span>
+                    </div>
+                    <div class="profile-dropdown">
+                        <div class="dropdown-content">
+                            <a href="#">Profile</a>
+                            <a href="#">Settings</a>
+                            <a href="#">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-container">
+            <!-- KPI Cards -->
+            <section class="kpi-section">
+                <h2>Key Performance Indicators</h2>
+                <div class="kpi-grid">
+                    <div class="kpi-card kpi-card--good">
+                        <div class="kpi-icon">🚗</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">1,245</div>
+                            <div class="kpi-unit">veh/hr</div>
+                            <div class="kpi-label">Flow Rate (q)</div>
+                        </div>
+                        <div class="kpi-trend kpi-trend--up">↑</div>
+                    </div>
+                    <div class="kpi-card kpi-card--caution">
+                        <div class="kpi-icon">📏</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">67</div>
+                            <div class="kpi-unit">veh/km</div>
+                            <div class="kpi-label">Density (k)</div>
+                        </div>
+                        <div class="kpi-trend kpi-trend--down">↓</div>
+                    </div>
+                    <div class="kpi-card kpi-card--good">
+                        <div class="kpi-icon">⚡</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">42</div>
+                            <div class="kpi-unit">km/h</div>
+                            <div class="kpi-label">Average Speed (v)</div>
+                        </div>
+                        <div class="kpi-trend kpi-trend--up">↑</div>
+                    </div>
+                    <div class="kpi-card kpi-card--caution">
+                        <div class="kpi-icon">🚦</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">65%</div>
+                            <div class="kpi-unit">Medium</div>
+                            <div class="kpi-label">Congestion Level</div>
+                        </div>
+                        <div class="kpi-trend kpi-trend--steady">→</div>
+                    </div>
+                    <div class="kpi-card kpi-card--good">
+                        <div class="kpi-icon">🌱</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">125</div>
+                            <div class="kpi-unit">kg CO2/hr</div>
+                            <div class="kpi-label">Emissions</div>
+                        </div>
+                        <div class="kpi-trend kpi-trend--down">↓</div>
+                    </div>
+                    <div class="kpi-card kpi-card--critical">
+                        <div class="kpi-icon">⚠️</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">3</div>
+                            <div class="kpi-unit">Active</div>
+                            <div class="kpi-label">Incident Alerts</div>
+                        </div>
+                        <div class="kpi-trend kpi-trend--up">↑</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Two Column Layout -->
+            <div class="two-column-layout">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Camera Feeds -->
+                    <section class="camera-section">
+                        <div class="section-header">
+                            <h2>Live Camera Feeds</h2>
+                            <button class="btn btn--sm btn--outline" onclick="refreshCameras()">Refresh All</button>
+                        </div>
+                        <div class="camera-grid">
+                            <div class="camera-card" data-camera="A1">
+                                <div class="camera-header">
+                                    <span class="camera-name">Intersection A1</span>
+                                    <span class="camera-status camera-status--online">●</span>
+                                </div>
+                                <div class="camera-feed">
+                                    <div class="camera-placeholder">📹</div>
+                                    <div class="camera-overlay">
+                                        <button class="btn btn--sm" onclick="expandCamera('A1')">⛶</button>
+                                    </div>
+                                </div>
+                                <div class="camera-timestamp">06:45:12</div>
+                            </div>
+                            <div class="camera-card" data-camera="H7">
+                                <div class="camera-header">
+                                    <span class="camera-name">Highway Exit 7</span>
+                                    <span class="camera-status camera-status--online">●</span>
+                                </div>
+                                <div class="camera-feed">
+                                    <div class="camera-placeholder">📹</div>
+                                    <div class="camera-overlay">
+                                        <button class="btn btn--sm" onclick="expandCamera('H7')">⛶</button>
+                                    </div>
+                                </div>
+                                <div class="camera-timestamp">06:45:08</div>
+                            </div>
+                            <div class="camera-card" data-camera="DC">
+                                <div class="camera-header">
+                                    <span class="camera-name">Downtown Core</span>
+                                    <span class="camera-status camera-status--online">●</span>
+                                </div>
+                                <div class="camera-feed">
+                                    <div class="camera-placeholder">📹</div>
+                                    <div class="camera-overlay">
+                                        <button class="btn btn--sm" onclick="expandCamera('DC')">⛶</button>
+                                    </div>
+                                </div>
+                                <div class="camera-timestamp">06:45:15</div>
+                            </div>
+                            <div class="camera-card" data-camera="BE">
+                                <div class="camera-header">
+                                    <span class="camera-name">Bridge Entrance</span>
+                                    <span class="camera-status camera-status--maintenance">●</span>
+                                </div>
+                                <div class="camera-feed camera-feed--offline">
+                                    <div class="camera-placeholder">🔧</div>
+                                    <div class="camera-offline-text">Maintenance</div>
+                                </div>
+                                <div class="camera-timestamp">06:42:33</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Traffic Charts -->
+                    <section class="charts-section">
+                        <h2>Traffic Analytics</h2>
+                        <div class="charts-grid">
+                            <div class="chart-container">
+                                <h3>Real-time Traffic Volume</h3>
+                                <div style="position: relative; height: 250px;">
+                                    <canvas id="volumeChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Speed Distribution</h3>
+                                <div style="position: relative; height: 250px;">
+                                    <canvas id="speedChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-container chart-container--full">
+                                <h3>Incident Timeline</h3>
+                                <div style="position: relative; height: 200px;">
+                                    <canvas id="incidentChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Heatmap -->
+                    <section class="heatmap-section">
+                        <div class="section-header">
+                            <h2>Traffic Density Heatmap</h2>
+                            <select class="form-control" style="width: auto;">
+                                <option>Real-time</option>
+                                <option>1 Hour Ago</option>
+                                <option>Peak Hours</option>
+                            </select>
+                        </div>
+                        <div class="heatmap-container">
+                            <div class="heatmap-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color legend-color--low"></div>
+                                    <span>Low</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-color--medium"></div>
+                                    <span>Medium</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-color--high"></div>
+                                    <span>High</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-color--critical"></div>
+                                    <span>Critical</span>
+                                </div>
+                            </div>
+                            <div class="city-map">
+                                <div class="map-region map-region--high" data-region="Downtown" title="Downtown - High Traffic">
+                                    <span class="region-label">Downtown</span>
+                                </div>
+                                <div class="map-region map-region--medium" data-region="Suburbs North" title="Suburbs North - Medium Traffic">
+                                    <span class="region-label">Suburbs N</span>
+                                </div>
+                                <div class="map-region map-region--low" data-region="Suburbs South" title="Suburbs South - Low Traffic">
+                                    <span class="region-label">Suburbs S</span>
+                                </div>
+                                <div class="map-region map-region--medium" data-region="Industrial Area" title="Industrial Area - Medium Traffic">
+                                    <span class="region-label">Industrial</span>
+                                </div>
+                                <div class="map-region map-region--critical" data-region="Airport Route" title="Airport Route - Critical Traffic">
+                                    <span class="region-label">Airport Route</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Manual Override Controls -->
+                    <section class="override-section">
+                        <div class="section-header">
+                            <h2>Manual Override Controls</h2>
+                            <div class="emergency-indicator">Ready</div>
+                        </div>
+                        <div class="override-panel">
+                            <button class="btn btn--lg emergency-btn" id="emergencyOverride">
+                                <span class="btn-icon">🚨</span>
+                                Emergency Override
+                            </button>
+                            <div class="override-controls">
+                                <div class="form-group">
+                                    <label class="form-label">Signal Override</label>
+                                    <select class="form-control" id="signalSelect">
+                                        <option value="">Select Intersection</option>
+                                        <option value="A1">Intersection A1</option>
+                                        <option value="B2">Intersection B2</option>
+                                        <option value="C3">Intersection C3</option>
+                                    </select>
+                                    <button class="btn btn--sm btn--outline" onclick="overrideSignal()">Override</button>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Emergency Protocol</label>
+                                    <div class="protocol-buttons">
+                                        <button class="btn btn--sm protocol-btn" data-protocol="fire">🚒 Fire</button>
+                                        <button class="btn btn--sm protocol-btn" data-protocol="ambulance">🚑 Ambulance</button>
+                                        <button class="btn btn--sm protocol-btn" data-protocol="police">🚓 Police</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Route Clearing</label>
+                                    <select class="form-control" id="routeSelect">
+                                        <option value="">Select Route</option>
+                                        <option value="route1">Highway 7 → Hospital</option>
+                                        <option value="route2">Downtown → Fire Station</option>
+                                        <option value="route3">Airport → City Center</option>
+                                    </select>
+                                    <button class="btn btn--sm btn--outline" onclick="clearRoute()">Clear Route</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Export Panel -->
+                    <section class="export-section">
+                        <h2>Reports & Export</h2>
+                        <div class="export-buttons">
+                            <button class="btn btn--outline" onclick="exportReport('pdf')">
+                                <span class="btn-icon">📄</span>
+                                Export PDF
+                            </button>
+                            <button class="btn btn--outline" onclick="exportReport('csv')">
+                                <span class="btn-icon">📊</span>
+                                Export CSV
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Camera Expansion -->
+    <div class="modal hidden" id="cameraModal">
+        <div class="modal-overlay" onclick="closeModal('cameraModal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalCameraTitle">Camera View</h3>
+                <button class="modal-close" onclick="closeModal('cameraModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="expanded-camera-feed">
+                    <div class="camera-placeholder">📹</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal hidden" id="confirmationModal">
+        <div class="modal-overlay" onclick="closeModal('confirmationModal')"></div>
+        <div class="modal-content modal-content--small">
+            <div class="modal-header">
+                <h3 id="confirmationTitle">Confirm Action</h3>
+                <button class="modal-close" onclick="closeModal('confirmationModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmationMessage">Are you sure you want to proceed?</p>
+                <div class="modal-actions">
+                    <button class="btn btn--secondary" onclick="closeModal('confirmationModal')">Cancel</button>
+                    <button class="btn btn--primary" id="confirmationButton">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

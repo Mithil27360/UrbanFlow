@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanFlow - The Future of Urban Traffic Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Refined Teal and Slate -->
+    <!-- Application Structure Plan: A product-focused landing page for a tech startup. The structure guides potential clients (municipalities, city planners) through a persuasive narrative: 1. Hero: A bold value proposition and clear CTA. 2. The Problem: Highlighting the pain points UrbanFlow solves. 3. The Solution (Product Intro): Presenting UrbanFlow's core features and engine. 4. Technology: A deep-dive into the data pipeline for technical audiences. 5. Impact: Showcasing measurable results and ROI with charts. 6. Features (Built for India): Framing challenges as tailored features. 7. CTA: A final call to action. This structure is standard for B2B tech websites, designed to build trust, demonstrate value, and drive conversions (demo requests). -->
+    <!-- Visualization & Content Choices: 
+        - The Problem: Report Info -> Key stats on urban congestion. Goal -> Establish need. Viz -> Animated statistic cards. Interaction -> Numbers animate on scroll. Justification -> Quickly conveys the severity of the problem.
+        - The Solution: Report Info -> Three-tier optimization engine. Goal -> Explain the unique selling proposition. Viz -> Interactive card-based diagram. Interaction -> Hovering over a tier reveals details. Justification -> Makes the core technology understandable and visually appealing.
+        - Technology: Report Info -> 11-stage data pipeline. Goal -> Prove technical depth. Viz -> Accordion-style interactive diagram. Interaction -> Clicking a stage expands details. Justification -> Manages dense technical information effectively.
+        - Impact: Report Info -> Improvement metrics. Goal -> Demonstrate ROI. Viz -> Two comparative bar charts (Chart.js). Interaction -> Tooltips on hover. Justification -> Provides clear, data-backed evidence of the product's value.
+        - Features (Challenges): Report Info -> Project barriers. Goal -> Show market fitness. Viz -> Tabbed content section. Interaction -> Clicking tabs reveals features. Justification -> Re-frames potential objections as product strengths.
+        - Library/Method: Chart.js for charts, custom JS and TailwindCSS for all other interactions and layouts. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #334155; /* slate-700 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 45vh;
+        }
+        .gradient-bg {
+            background-color: #f0fdfa; /* teal-50 */
+            background-image: radial-gradient(#ccfbf1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .step-connector::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 48px; /* Position below the icon */
+            height: calc(100% - 48px);
+            width: 2px;
+            background-color: #e2e8f0; /* slate-200 */
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-teal-600">UrbanFlow</a>
+            <div class="hidden lg:flex space-x-8 items-center">
+                <a href="#problem" class="text-slate-600 hover:text-teal-600 transition font-medium">The Problem</a>
+                <a href="#solution" class="text-slate-600 hover:text-teal-600 transition font-medium">Our Solution</a>
+                <a href="#impact" class="text-slate-600 hover:text-teal-600 transition font-medium">Results</a>
+                <a href="#technology" class="text-slate-600 hover:text-teal-600 transition font-medium">Technology</a>
+            </div>
+            <a href="dashboard.html" class="hidden lg:inline-block bg-teal-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-teal-700 transition shadow-sm">Check Demo</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="gradient-bg">
+            <div class="container mx-auto px-6 py-24 md:py-32 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight tracking-tighter">
+                    Stop Traffic Jams. Start City Flow.
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+                    UrbanFlow is the AI platform that cuts congestion and emissions using your existing city cameras. See the future of traffic, today.
+                </p>
+                <div class="mt-10 flex justify-center items-center gap-4">
+                    <a href="dashboard.html" class="bg-teal-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-teal-700 transition shadow">Check Demo</a>
+                    <a href="#technology" class="bg-white text-slate-700 font-semibold px-8 py-3 rounded-lg hover:bg-slate-50 transition border border-slate-200">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <span class="text-teal-600 font-semibold">THE HIGH COST OF GRIDLOCK</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">India's Cities are at a Standstill</h2>
+                    <p class="mt-4 text-slate-600">
+                        Outdated traffic infrastructure costs our nation dearly in lost productivity, fuel, and clean air. The cycle of gridlock is a solvable problem, but it requires a modern, intelligent solution.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-slate-50 p-8 rounded-xl shadow-sm text-center">
+                        <p class="text-teal-600 text-5xl font-bold" id="stat-loss">₹0.0</p>
+                        <p class="mt-2 text-slate-600 font-medium">Lakh Crore Lost Annually</p>
+                        <p class="mt-1 text-sm text-slate-500">to congestion-related productivity loss.</p>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-xl shadow-sm text-center">
+                        <p class="text-teal-600 text-5xl font-bold" id="stat-hours">0+</p>
+                        <p class="mt-2 text-slate-600 font-medium">Hours Wasted Per Commuter</p>
+                        <p class="mt-1 text-sm text-slate-500">annually in cities like Bengaluru & Kolkata.</p>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-xl shadow-sm text-center">
+                        <p class="text-teal-600 text-5xl font-bold" id="stat-emissions">0%</p>
+                        <p class="mt-2 text-slate-600 font-medium">of Urban PM2.5 Emissions</p>
+                         <p class="mt-1 text-sm text-slate-500">are contributed by vehicles in gridlock.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="solution" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <span class="text-teal-600 font-semibold">OUR 3-TIER AI ENGINE</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">The Intelligent Core of UrbanFlow</h2>
+                    <p class="mt-4 text-slate-600">
+                        Our novel optimization engine works in harmony to move beyond fixing single intersections and start managing city-wide traffic flow as one cohesive system.
+                    </p>
+                </div>
+                <div class="mt-12 max-w-6xl mx-auto">
+                    <div id="solution-diagram" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="solution-tier bg-white p-8 rounded-xl border border-slate-200 hover:shadow-lg transition">
+                            <div class="text-4xl">🤖</div>
+                            <h3 class="mt-4 text-lg font-bold">Reinforcement Learning</h3>
+                            <p class="mt-2 text-sm text-slate-500">At the intersection level, our RL agent makes adaptive signal decisions in real-time, cutting down queues and waiting times instantly.</p>
+                        </div>
+                        <div class="solution-tier bg-white p-8 rounded-xl border border-slate-200 hover:shadow-lg transition">
+                            <div class="text-4xl">🧬</div>
+                            <h3 class="mt-4 text-lg font-bold">Genetic Algorithms</h3>
+                            <p class="mt-2 text-sm text-slate-500">When congestion is predicted, our GA engine calculates and suggests optimal alternative routes to prevent bottlenecks before they form.</p>
+                        </div>
+                        <div class="solution-tier bg-white p-8 rounded-xl border border-slate-200 hover:shadow-lg transition">
+                            <div class="text-4xl">🌐</div>
+                            <h3 class="mt-4 text-lg font-bold">Adaptive Network Search</h3>
+                            <p class="mt-2 text-sm text-slate-500">This top-layer coordinates all intersections, creating "green waves" and balancing traffic load across the entire city network for true equilibrium.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="impact" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                     <span class="text-teal-600 font-semibold">PROVEN IMPACT & CLEAR ROI</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">Data-Backed Performance</h2>
+                    <p class="mt-4 text-slate-600">
+                        UrbanFlow delivers immediate, quantifiable improvements across key metrics for mobility, economy, and the environment.
+                    </p>
+                </div>
+                <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-bold text-center mb-6">Mobility Improvement</h3>
+                        <div class="chart-container">
+                            <canvas id="timeReductionChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-bold text-center mb-6">Environmental & Economic Savings</h3>
+                        <div class="chart-container">
+                            <canvas id="environmentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="technology" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <span class="text-teal-600 font-semibold">HOW OUR TECHNOLOGY WORKS</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">From Pixels to Predictions</h2>
+                    <p class="mt-4 text-slate-600">
+                       Our platform operates on a simple yet powerful three-step process to turn any video feed into an optimized traffic network.
+                    </p>
+                </div>
+                <div class="mt-16 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="relative flex flex-col items-center">
+                        <div class="relative w-12 h-12 flex items-center justify-center bg-teal-100 text-teal-600 rounded-full text-2xl font-bold">1</div>
+                        <h3 class="mt-4 font-bold text-lg">Detect & Analyze</h3>
+                        <p class="mt-2 text-sm text-slate-500">YOLOv10 AI analyzes any CCTV feed to identify and track every vehicle, calculating real-time speed, count, and density.</p>
+                    </div>
+                    <div class="relative flex flex-col items-center">
+                        <div class="relative w-12 h-12 flex items-center justify-center bg-teal-100 text-teal-600 rounded-full text-2xl font-bold">2</div>
+                        <h3 class="mt-4 font-bold text-lg">Predict & Forecast</h3>
+                        <p class="mt-2 text-sm text-slate-500">Our LSTM neural network processes this data to accurately predict traffic flow and potential jams up to 15 minutes in advance.</p>
+                    </div>
+                    <div class="relative flex flex-col items-center">
+                        <div class="relative w-12 h-12 flex items-center justify-center bg-teal-100 text-teal-600 rounded-full text-2xl font-bold">3</div>
+                        <h3 class="mt-4 font-bold text-lg">Optimize & Act</h3>
+                        <p class="mt-2 text-sm text-slate-500">The 3-Tier AI Engine continuously optimizes signal timings and routes across the city, preventing gridlock before it begins.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <span class="text-teal-600 font-semibold">WHY URBANFLOW?</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">A Solution Engineered for India's Roads</h2>
+                    <p class="mt-4 text-slate-600">
+                        We didn't just build a traffic solution; we built an Indian traffic solution. UrbanFlow is designed from the ground up to handle the unique challenges of our cities.
+                    </p>
+                </div>
+                <div class="mt-12 max-w-5xl mx-auto">
+                    <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-4 border-b border-slate-200">
+                        <button class="feature-tab active-tab px-4 py-2 font-semibold rounded-t-lg" data-target="social">Handles Chaotic Traffic</button>
+                        <button class="feature-tab px-4 py-2 font-semibold" data-target="tech">Uses Existing Infrastructure</button>
+                        <button class="feature-tab px-4 py-2 font-semibold" data-target="financial">Financially Viable</button>
+                        <button class="feature-tab px-4 py-2 font-semibold" data-target="regulatory">Policy Compliant</button>
+                    </div>
+                    <div id="features-content" class="bg-white p-8 min-h-[150px] flex items-center">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="py-20 gradient-bg">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Ready to See the Future of Your City?</h2>
+                 <p class="mt-4 text-slate-600 max-w-2xl mx-auto">
+                    Explore our live dashboard to see how UrbanFlow analyzes and optimizes traffic flow in real-time using its advanced AI engine.
+                </p>
+                <div class="mt-8">
+                    <a href="dashboard.html" class="bg-teal-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-teal-700 transition shadow text-lg">Check the Live Demo</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="font-bold text-xl text-white">UrbanFlow</p>
+            <p class="mt-8 text-sm text-slate-500">&copy; 2025 UrbanFlow. A Smart India Hackathon Project.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const data = {
+                impact: {
+                    time: {
+                        labels: ['Overall Congestion', 'Intersection Wait Time'],
+                        data: [17.5, 35]
+                    },
+                    environment: {
+                        labels: ['Fuel Consumption', 'CO₂ Emissions'],
+                        data: [17.5, 20]
+                    }
+                },
+                features: {
+                    tech: "<strong>Feature:</strong> Our software-first approach retrofits your existing CCTV infrastructure, eliminating the need for costly hardware overhauls. UrbanFlow integrates seamlessly with legacy systems.",
+                    financial: "<strong>Feature:</strong> With a clear ROI and minimal capital expenditure, UrbanFlow is a financially sustainable solution for any municipality. It delivers measurable economic benefits through fuel and productivity savings.",
+                    regulatory: "<strong>Feature:</strong> Built for compliance from the ground up, the platform aligns with the Motor Vehicles Act, NUTP 2024, and national ITS standards, ensuring smooth deployment.",
+                    social: "<strong>Feature:</strong> Our AI models are trained on Indian traffic data. This allows them to expertly manage our unique mix of vehicles (autos, bikes) and non-lane-based driving behavior where other systems fail."
+                }
+            };
+            
+            function animateStat(element, finalValue, isCurrency) {
+                let currentValue = 0;
+                const duration = 1500;
+                const stepTime = 20;
+                const totalSteps = duration / stepTime;
+                const increment = finalValue / totalSteps;
+                
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= finalValue) {
+                        currentValue = finalValue;
+                        clearInterval(timer);
+                    }
+                    if (isCurrency) {
+                        element.textContent = `₹${currentValue.toFixed(1)}`;
+                    } else {
+                         if (element.id === 'stat-hours') element.textContent = `${Math.ceil(currentValue)}+`;
+                         else element.textContent = `${Math.ceil(currentValue)}%`;
+                    }
+                }, stepTime);
+            }
+            
+            const statLoss = document.getElementById('stat-loss');
+            const statHours = document.getElementById('stat-hours');
+            const statEmissions = document.getElementById('stat-emissions');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStat(statLoss, 1.7, true);
+                        animateStat(statHours, 120, false);
+                        animateStat(statEmissions, 30, false);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(document.getElementById('problem'));
+
+            new Chart(document.getElementById('timeReductionChart'), {
+                type: 'bar',
+                data: {
+                    labels: data.impact.time.labels,
+                    datasets: [{
+                        label: 'Reduction (%)',
+                        data: data.impact.time.data,
+                        backgroundColor: ['rgba(20, 184, 166, 0.7)', 'rgba(15, 118, 110, 0.7)'],
+                        borderColor: ['#0d9488', '#158074'],
+                        borderWidth: 1.5,
+                        borderRadius: 5,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: { x: { beginAtZero: true, max: 50, grid: { display: false }, title: { display: true, text: 'Improvement (%)', font: { weight: 'bold' } } } }
+                }
+            });
+
+            new Chart(document.getElementById('environmentChart'), {
+                type: 'bar',
+                data: {
+                    labels: data.impact.environment.labels,
+                    datasets: [{
+                        label: 'Reduction (%)',
+                        data: data.impact.environment.data,
+                        backgroundColor: ['rgba(20, 184, 166, 0.7)', 'rgba(15, 118, 110, 0.7)'],
+                        borderColor: ['#0d9488', '#158074'],
+                        borderWidth: 1.5,
+                        borderRadius: 5,
+                        barPercentage: 0.6,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: { x: { beginAtZero: true, max: 50, grid: { display: false }, title: { display: true, text: 'Improvement (%)', font: { weight: 'bold' } } } }
+                }
+            });
+            
+            const featureTabs = document.querySelectorAll('.feature-tab');
+            const featureContent = document.getElementById('features-content');
+            featureTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    featureTabs.forEach(t => t.classList.remove('active-tab'));
+                    tab.classList.add('active-tab');
+                    const target = tab.dataset.target;
+                    featureContent.innerHTML = `<p class="text-slate-600 text-center md:text-left">${data.features[target]}</p>`;
+                });
+            });
+            featureContent.innerHTML = `<p class="text-slate-600 text-center md:text-left">${data.features.social}</p>`;
+            const tabStyle = document.createElement('style');
+            tabStyle.innerHTML = `.active-tab { color: #0d9488; border-bottom: 2px solid #0d9488; }`;
+            document.head.appendChild(tabStyle);
+
+        });
+    </script>
+</body>
+</html>
+
+
+
