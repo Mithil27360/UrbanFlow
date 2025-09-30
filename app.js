@@ -1,11 +1,9 @@
-// Traffic Management Dashboard JavaScript
 
-// Global variables
 let volumeChart, speedChart, incidentChart;
 let updateInterval;
 let currentSection = 'dashboard';
 
-// Application data
+
 const appData = {
   kpis: {
     flowRate: { value: 1245, unit: "veh/hr", trend: "up", status: "good" },
@@ -39,29 +37,18 @@ const appData = {
   ]
 };
 
-// Initialize the application when DOM is loaded
+
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
 function initializeApp() {
-    // Initialize datetime display
     updateDateTime();
     setInterval(updateDateTime, 1000);
-    
-    // Initialize charts
     initializeCharts();
-    
-    // Initialize event listeners
     initializeEventListeners();
-    
-    // Start real-time updates
     startRealTimeUpdates();
-    
-    // Initialize tooltips for map regions
     initializeMapTooltips();
-    
-    // Initialize sidebar navigation
     initializeSidebarNavigation();
 }
 
@@ -85,18 +72,14 @@ function initializeSidebarNavigation() {
     navItems.forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            // Remove active class from all items
+           
             navItems.forEach(navItem => navItem.classList.remove('nav-item--active'));
-            
-            // Add active class to clicked item
+       
             this.classList.add('nav-item--active');
-            
-            // Get section from nav text
+      
             const sectionText = this.querySelector('.nav-text').textContent.toLowerCase();
             let sectionId = sectionText.replace(/\s+/g, '-').replace('&', 'and');
-            
-            // Handle special cases
+      
             if (sectionId === 'alerts-and-notifications') sectionId = 'alerts';
             if (sectionId === 'user-management') sectionId = 'users';
             if (sectionId === 'historical-data') sectionId = 'history';
@@ -110,7 +93,7 @@ function showSection(sectionId) {
     currentSection = sectionId;
     const dashboardContainer = document.querySelector('.dashboard-container');
     
-    // Clear current content
+  
     dashboardContainer.innerHTML = '';
     
     switch(sectionId) {
@@ -407,7 +390,7 @@ function showDashboardContent() {
         </div>
     `;
     
-    // Re-initialize charts after content is added
+
     setTimeout(() => {
         initializeCharts();
         initializeMapTooltips();
@@ -681,7 +664,7 @@ function initializeCharts() {
         });
     }
 
-    // Speed Distribution Chart
+  
     const speedCanvas = document.getElementById('speedChart');
     if (speedCanvas) {
         const speedCtx = speedCanvas.getContext('2d');
@@ -723,7 +706,7 @@ function initializeCharts() {
         });
     }
 
-    // Incident Timeline Chart
+
     const incidentCanvas = document.getElementById('incidentChart');
     if (incidentCanvas) {
         const incidentCtx = incidentCanvas.getContext('2d');
@@ -771,7 +754,6 @@ function initializeCharts() {
 }
 
 function initializeEventListeners() {
-    // Mobile menu toggle
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const sidebar = document.getElementById('sidebar');
     
@@ -781,7 +763,6 @@ function initializeEventListeners() {
         });
     }
 
-    // Emergency override button (will be re-added when dashboard content loads)
     document.addEventListener('click', function(e) {
         if (e.target.id === 'emergencyOverride') {
             showConfirmation(
@@ -791,7 +772,7 @@ function initializeEventListeners() {
             );
         }
         
-        // Handle protocol buttons
+        
         if (e.target.classList.contains('protocol-btn')) {
             document.querySelectorAll('.protocol-btn').forEach(btn => btn.classList.remove('active'));
             e.target.classList.add('active');
@@ -801,7 +782,7 @@ function initializeEventListeners() {
         }
     });
 
-    // Map region hover effects will be re-initialized when dashboard content loads
+  
 }
 
 function initializeMapTooltips() {
@@ -850,11 +831,11 @@ function startRealTimeUpdates() {
         updateKPIValues();
         updateCameraTimestamps();
         updateChartData();
-    }, 5000); // Update every 5 seconds
+    }, 5000); 
 }
 
 function updateKPIValues() {
-    // Simulate real-time KPI updates with small random variations
+   
     const kpiCards = document.querySelectorAll('.kpi-card');
     
     kpiCards.forEach((card, index) => {
@@ -901,10 +882,9 @@ function updateCameraTimestamps() {
 }
 
 function updateChartData() {
-    // Update charts only if they exist
     if (volumeChart) {
         const newVolumeData = appData.trafficData.volume.map(val => 
-            val + Math.floor(Math.random() * 101) - 50 // ±50
+            val + Math.floor(Math.random() * 101) - 50 
         );
         volumeChart.data.datasets[0].data = newVolumeData;
         volumeChart.update('none');
@@ -912,7 +892,7 @@ function updateChartData() {
     
     if (speedChart) {
         const newSpeedData = appData.trafficData.speed.map(val => 
-            Math.max(0, val + Math.floor(Math.random() * 11) - 5) // ±5
+            Math.max(0, val + Math.floor(Math.random() * 11) - 5) 
         );
         speedChart.data.datasets[0].data = newSpeedData;
         speedChart.update('none');
@@ -920,18 +900,18 @@ function updateChartData() {
     
     if (incidentChart) {
         const newIncidentData = appData.trafficData.incidents.map(val => 
-            Math.max(0, val + Math.floor(Math.random() * 3) - 1) // ±1
+            Math.max(0, val + Math.floor(Math.random() * 3) - 1) 
         );
         incidentChart.data.datasets[0].data = newIncidentData;
         incidentChart.update('none');
     }
 }
 
-// Camera functions
+
 function refreshCameras() {
     showToast('Refreshing all camera feeds...', 'info');
     
-    // Simulate refresh delay
+ 
     setTimeout(() => {
         updateCameraTimestamps();
         showToast('Camera feeds refreshed successfully', 'success');
@@ -946,7 +926,7 @@ function expandCamera(cameraId) {
     }
 }
 
-// Override functions
+
 function overrideSignal() {
     const selectedSignal = document.getElementById('signalSelect').value;
     if (!selectedSignal) {
@@ -985,24 +965,24 @@ function clearRoute() {
 function activateEmergencyOverride() {
     showToast('Emergency Override activated - All signals under manual control', 'warning');
     
-    // Update emergency indicator
+  
     const indicator = document.querySelector('.emergency-indicator');
     if (indicator) {
         indicator.textContent = 'OVERRIDE ACTIVE';
         indicator.style.backgroundColor = 'var(--color-error)';
     }
     
-    // Auto-deactivate after 5 minutes (simulation)
+   
     setTimeout(() => {
         if (indicator) {
             indicator.textContent = 'Ready';
             indicator.style.backgroundColor = 'var(--color-success)';
         }
         showToast('Emergency Override deactivated - Normal operation resumed', 'info');
-    }, 300000); // 5 minutes
+    }, 300000); 
 }
 
-// Report generation functions
+
 function generateReport(type) {
     showToast(`Generating ${type} report...`, 'info');
     setTimeout(() => {
@@ -1010,16 +990,16 @@ function generateReport(type) {
     }, 2000);
 }
 
-// Export functions
+
 function exportReport(format) {
     showToast(`Generating ${format.toUpperCase()} report...`, 'info');
     
-    // Simulate export delay
+ 
     setTimeout(() => {
         const fileName = `traffic_report_${new Date().toISOString().split('T')[0]}.${format}`;
         showToast(`Report exported: ${fileName}`, 'success');
         
-        // Create a dummy download (simulation)
+       
         const link = document.createElement('a');
         link.href = `data:text/plain;charset=utf-8,Traffic Management Report - ${new Date().toLocaleDateString()}`;
         link.download = fileName;
@@ -1030,7 +1010,7 @@ function exportReport(format) {
     }, 2000);
 }
 
-// Modal functions
+
 function showModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -1058,7 +1038,7 @@ function showConfirmation(title, message, confirmCallback) {
     showModal('confirmationModal');
 }
 
-// Alert functions
+
 function closeAlert(alertElement) {
     alertElement.style.opacity = '0';
     alertElement.style.transform = 'translateX(100%)';
@@ -1071,7 +1051,7 @@ function closeAlert(alertElement) {
 }
 
 function showToast(message, type = 'info') {
-    // Create toast notification
+  
     const toast = document.createElement('div');
     toast.className = `toast toast--${type}`;
     toast.innerHTML = `
@@ -1079,7 +1059,7 @@ function showToast(message, type = 'info') {
         <button class="toast-close" onclick="closeToast(this)">×</button>
     `;
     
-    // Add toast styles if not already present
+
     if (!document.querySelector('.toast-container')) {
         const container = document.createElement('div');
         container.className = 'toast-container';
@@ -1095,7 +1075,7 @@ function showToast(message, type = 'info') {
         document.body.appendChild(container);
     }
     
-    // Style the toast
+   
     toast.style.cssText = `
         background: var(--color-surface);
         border: 1px solid var(--color-border);
@@ -1111,7 +1091,7 @@ function showToast(message, type = 'info') {
         transition: all var(--duration-normal) var(--ease-standard);
     `;
     
-    // Type-specific styling
+    
     switch(type) {
         case 'success':
             toast.style.borderColor = 'var(--color-success)';
@@ -1130,13 +1110,13 @@ function showToast(message, type = 'info') {
     const container = document.querySelector('.toast-container');
     container.appendChild(toast);
     
-    // Animate in
+   
     setTimeout(() => {
         toast.style.opacity = '1';
         toast.style.transform = 'translateX(0)';
     }, 10);
     
-    // Auto-remove after 5 seconds
+   
     setTimeout(() => {
         closeToast(toast.querySelector('.toast-close'));
     }, 5000);
@@ -1154,14 +1134,14 @@ function closeToast(closeButton) {
     }, 300);
 }
 
-// Cleanup function
+
 window.addEventListener('beforeunload', function() {
     if (updateInterval) {
         clearInterval(updateInterval);
     }
 });
 
-// Handle window resize for responsive charts
+
 window.addEventListener('resize', function() {
     setTimeout(() => {
         if (volumeChart) volumeChart.resize();
